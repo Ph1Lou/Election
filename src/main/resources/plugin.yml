@@ -1,0 +1,7 @@
+name: Elections
+version: 1.0
+author: Ph1Lou
+main: fr.ph1lou.elections.Main
+description: Addon Elections par Ph1Lou
+load: STARTUP
+depend: [WereWolfPlugin]
