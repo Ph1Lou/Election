@@ -24,7 +24,7 @@ public class ElectionListener implements Listener {
     public void onNameTagUpdate(UpdatePlayerNameTagEvent event){
         this.main.getElectionManager().flatMap(ElectionManager::getMayor).ifPresent(playerWW -> {
             if (playerWW.getUUID().equals(event.getPlayerUUID())) {
-                event.setPrefix(event.getPrefix() + this.main.getWw().getWereWolfAPI().translate("werewolf.election.star"));
+                event.setPrefix(event.getPrefix() + this.main.getWereWolfAPI().getWereWolfAPI().translate("werewolf.election.star"));
             }
         });
     }
@@ -39,7 +39,8 @@ public class ElectionListener implements Listener {
         this.main.getElectionManager().ifPresent(electionManager -> electionManager.getMayor().ifPresent(playerWW -> {
             if(event.getPlayerWW().equals(playerWW)){
                 electionManager.setMayor(null);
-                Bukkit.broadcastMessage(this.main.getWw().getWereWolfAPI().translate("werewolf.election.death"));
+                Bukkit.broadcastMessage(this.main.getWereWolfAPI()
+                        .getWereWolfAPI().translate("werewolf.election.death"));
             }
         }));
     }
@@ -48,7 +49,7 @@ public class ElectionListener implements Listener {
     public void onVote(VoteEvent event){
         this.main.getElectionManager().flatMap(ElectionManager::getMayor).ifPresent(playerWW -> {
             if (playerWW.equals(event.getPlayerWW())) {
-                Map<IPlayerWW,Integer> votes = this.main.getWw().getWereWolfAPI().getVote().getVotes();
+                Map<IPlayerWW,Integer> votes = this.main.getWereWolfAPI().getWereWolfAPI().getVote().getVotes();
                 votes.put(event.getTargetWW(),votes.getOrDefault(event.getTargetWW(),0)+1);
             }
         });

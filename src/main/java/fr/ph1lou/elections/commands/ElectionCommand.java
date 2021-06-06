@@ -1,7 +1,7 @@
 package fr.ph1lou.elections.commands;
 
 import fr.ph1lou.elections.Main;
-import fr.ph1lou.elections.elections.Election;
+import fr.ph1lou.elections.elections.ElectionGUI;
 import fr.ph1lou.elections.elections.ElectionState;
 import io.github.ph1lou.werewolfapi.ICommand;
 import io.github.ph1lou.werewolfapi.IPlayerWW;
@@ -58,7 +58,7 @@ public class ElectionCommand implements ICommand {
                     }
 
                     if (electionManager.isState(ElectionState.ELECTION)) {
-                        Election.getInventory(player).open(player);
+                        ElectionGUI.getInventory(player).open(player);
                         return;
                     }
 

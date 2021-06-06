@@ -3,6 +3,7 @@ package fr.ph1lou.elections.elections;
 import io.github.ph1lou.werewolfapi.Formatter;
 import io.github.ph1lou.werewolfapi.IPlayerWW;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
+import io.github.ph1lou.werewolfapi.enums.StatePlayer;
 import io.github.ph1lou.werewolfapi.events.UpdateNameTagEvent;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.Nullable;
@@ -50,6 +51,14 @@ public class ElectionManager {
     }
 
     public void addVote(IPlayerWW playerWW, IPlayerWW target){
+
+        if(!playerWW.isState(StatePlayer.ALIVE)){
+            return;
+        }
+
+        if(playerWW.equals(target)){
+            return;
+        }
         this.votes.put(playerWW,target);
     }
 
@@ -68,7 +77,7 @@ public class ElectionManager {
         Set<IPlayerWW> voters = new HashSet<>();
         this.votes.forEach((playerWW1, playerWW2) -> {
             if(playerWW2.equals(playerWW)){
-                voters.add(playerWW2);
+                voters.add(playerWW1);
             }
         });
         return voters;
@@ -95,9 +104,10 @@ public class ElectionManager {
         if(max.get()==0) return;
 
         this.setState(ElectionState.FINISH);
+        this.setMayor(mayor.get());
 
         Bukkit.broadcastMessage(api.translate("werewolf.election.result",
-                Formatter.format("&name&",mayor.get()),
+                Formatter.format("&name&",mayor.get().getName()),
                 Formatter.format("&votes&",max.get())));
     }
 }

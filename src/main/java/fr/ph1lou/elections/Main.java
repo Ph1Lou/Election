@@ -7,6 +7,7 @@ import io.github.ph1lou.werewolfapi.GetWereWolfAPI;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
 import io.github.ph1lou.werewolfapi.enums.StateGame;
 import io.github.ph1lou.werewolfapi.enums.StatePlayer;
+import io.github.ph1lou.werewolfapi.enums.TimerBase;
 import io.github.ph1lou.werewolfapi.enums.UniversalMaterial;
 import io.github.ph1lou.werewolfapi.registers.AddonRegister;
 import io.github.ph1lou.werewolfapi.registers.CommandRegister;
@@ -30,6 +31,9 @@ public class Main extends JavaPlugin {
     public void onEnable() {
 
         this.ww = getServer().getServicesManager().load(GetWereWolfAPI.class);
+
+        assert this.ww != null;
+
         IRegisterManager registerManager = this.ww.getRegisterManager();
         String addons = "werewolf.addons_elections";
 
@@ -42,7 +46,12 @@ public class Main extends JavaPlugin {
             .addStateWW(StateGame.GAME)
             .addStateAccess(StatePlayer.ALIVE));
 
-        registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer").setDefaultValue(36000).onZero(wereWolfAPI -> {
+        registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer").setDefaultValue(1800).onZero(wereWolfAPI -> {
+
+            if(!wereWolfAPI.getConfig().isConfigActive("werewolf.election.name")){
+                return;
+            }
+
             Bukkit.broadcastMessage(wereWolfAPI.translate("werewolf.election.begin"));
             this.getElectionManager().ifPresent(electionManager1 -> electionManager1.setState(ElectionState.MESSAGE));
             BukkitUtils.scheduleSyncDelayedTask(() -> {
@@ -57,7 +66,8 @@ public class Main extends JavaPlugin {
                     },1200);
                 }
             },2400);
-        }));
+        }).addPredicate(wereWolfAPI -> wereWolfAPI.getConfig().getTimerValue(TimerBase.ROLE_DURATION.getKey()) < 0
+                && !wereWolfAPI.getConfig().isTrollSV()));
 
 
 
@@ -67,8 +77,8 @@ public class Main extends JavaPlugin {
     }
 
 
-    public GetWereWolfAPI getWw() {
-        return ww;
+    public GetWereWolfAPI getWereWolfAPI() {
+        return this.ww;
     }
 
     public Optional<ElectionManager> getElectionManager() {

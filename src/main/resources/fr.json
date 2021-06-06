@@ -3,19 +3,21 @@
     "addons_elections": "§fAddon des Elections",
     "election": {
       "command": "election",
-      "star": " §6⭐",
+      "star": "§6⭐ ",
+      "name": "Elections",
       "death": "[§cLG UHC§r] Le maire est mort",
       "disable": "[§cLG UHC§r] Les élections sont désactivées",
       "not_begin": "[§cLG UHC§r] Les élections n'ont pas encore commencé",
       "empty": "[§cLG UHC§r] Votre message est vide",
       "register": "[§aLG UHC§r] Votre participation a été enregistrée",
-      "change": "[§aLG UHC§r] Votre participation a été changée",
+      "change": "[§6LG UHC§r] Votre participation a été changée",
       "finish": "[§eLG UHC§r] Les élections sont finies",
       "menu_title": "Menu des §bVotes",
-      "timer": "Durée des élections (§b%d§f)",
+      "timer": "Début des élections (§b%s§f)",
+      "application": "Candidature : §b%s",
       "begin": "[§eLG UHC§r] C'est le début des elections du maire (double vote), pour vous présenter §b/ww election§f <message pour convaincre les électeurs>, vous avez §b2 minutes",
       "vote": "[§eLG UHC§r] C'est le moment du vote. Votez pour votre maire avec §b/ww election§f, vous avez §b1 minute",
-      "result": "[§eLG UHC§r] Le maire &name& a été élu avec &votes& votes"
+      "result": "[§eLG UHC§r] Le maire §b&name&§f a été élu avec §b&votes&§f votes, il obtient un double vote"
     }
   }
 }
