@@ -1,11 +1,16 @@
 package fr.ph1lou.elections;
 
 import fr.ph1lou.elections.elections.ElectionManager;
+import fr.ph1lou.elections.elections.MayorState;
 import io.github.ph1lou.werewolfapi.IPlayerWW;
+import io.github.ph1lou.werewolfapi.enums.StatePlayer;
 import io.github.ph1lou.werewolfapi.events.UpdatePlayerNameTagEvent;
 import io.github.ph1lou.werewolfapi.events.game.game_cycle.StartEvent;
 import io.github.ph1lou.werewolfapi.events.game.life_cycle.FinalDeathEvent;
+import io.github.ph1lou.werewolfapi.events.game.life_cycle.ThirdDeathEvent;
 import io.github.ph1lou.werewolfapi.events.game.vote.VoteEvent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,6 +48,40 @@ public class ElectionListener implements Listener {
                         .getWereWolfAPI().translate("werewolf.election.death"));
             }
         }));
+    }
+
+    @EventHandler
+    public void onThirdDeathEvent(ThirdDeathEvent event) {
+
+        if (event.isCancelled()) return;
+
+        this.main.getElectionManager().ifPresent(electionManager -> {
+            electionManager.getMayor().ifPresent(playerWW -> {
+
+                if(!electionManager.isPower()){
+                    return;
+                }
+
+                if(electionManager.getMayorState() != MayorState.DOCTOR){
+                    return;
+                }
+
+                if(!playerWW.equals(event.getPlayerWW())){
+                    return;
+                }
+
+                main.getWereWolfAPI().getWereWolfAPI().resurrection(playerWW);
+
+                event.setCancelled(true);
+
+                playerWW.sendMessageWithKey("werewolf.election.regime.doctor.resurrection");
+
+                electionManager.unSetPower();
+            });
+        });
+
+
+
     }
 
     @EventHandler

@@ -5,6 +5,25 @@
       "command": "election",
       "star": "§6⭐ ",
       "name": "Elections",
+      "regime": {
+        "doctor": {
+          "name": "Docteur",
+          "description": "[§aLG UHC§r] Vous avez une seconde vie",
+          "resurrection": "[§aLG UHC§r] Vous ressuscitez avec votre pouvoir de maire §bMedecin"
+        },
+        "farmer": {
+          "name":"Fermier",
+          "description": "[§aLG UHC§r] Vous n'avez plus besoin de vous nourrir pendant la partie"
+        },
+        "retailer": {
+          "name":"Commerçant",
+          "description": ""
+        },
+        "black_smith": {
+          "name":"Forgeron",
+          "description": ""
+        }
+      },
       "death": "[§cLG UHC§r] Le maire est mort",
       "disable": "[§cLG UHC§r] Les élections sont désactivées",
       "not_begin": "[§cLG UHC§r] Les élections n'ont pas encore commencé",
@@ -14,10 +33,12 @@
       "finish": "[§eLG UHC§r] Les élections sont finies",
       "menu_title": "Menu des §bVotes",
       "timer": "Début des élections (§b%s§f)",
+      "timer_application": "Durée des candidatures (§b%s§f)",
+      "timer_vote_mayor": "Durée du vote pour le Maire (§b%s§f)",
       "application": "Candidature : §b%s",
       "begin": "[§eLG UHC§r] C'est le début des elections du maire (double vote), pour vous présenter §b/ww election§f <message pour convaincre les électeurs>, vous avez §b2 minutes",
       "vote": "[§eLG UHC§r] C'est le moment du vote. Votez pour votre maire avec §b/ww election§f, vous avez §b1 minute",
-      "result": "[§eLG UHC§r] Le maire §b&name&§f a été élu avec §b&votes&§f votes, il obtient un double vote"
+      "result": "[§eLG UHC§r] Le maire &forme& §b&name&§f a été élu avec §b&votes&§f votes. Il a un double vote en plus du pouvoir de sa forme"
     }
   }
 }

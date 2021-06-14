@@ -2,16 +2,19 @@ package fr.ph1lou.elections.elections;
 
 import io.github.ph1lou.werewolfapi.Formatter;
 import io.github.ph1lou.werewolfapi.IPlayerWW;
+import io.github.ph1lou.werewolfapi.PotionModifier;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
 import io.github.ph1lou.werewolfapi.enums.StatePlayer;
 import io.github.ph1lou.werewolfapi.events.UpdateNameTagEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -23,6 +26,8 @@ public class ElectionManager {
     private final Map<IPlayerWW, String> playerMessages = new HashMap<>();
     private final Map<IPlayerWW, IPlayerWW> votes = new HashMap<>();
     private IPlayerWW mayor;
+    private MayorState mayorState = MayorState.values()[(int) Math.floor(new Random(System.currentTimeMillis()).nextFloat() * MayorState.values().length)];
+    private boolean power = true;
 
     public ElectionManager(WereWolfAPI api){
         this.api=api;
@@ -37,10 +42,10 @@ public class ElectionManager {
     }
 
     public void setMayor(@Nullable IPlayerWW mayor){
-        if(this.mayor!=null){
+        if(this.mayorState !=null){
             Bukkit.getPluginManager().callEvent(new UpdateNameTagEvent(this.mayor));
         }
-        this.mayor=mayor;
+        this.mayor =mayor;
         if(mayor!=null){
             Bukkit.getPluginManager().callEvent(new UpdateNameTagEvent(mayor));
         }
@@ -106,8 +111,42 @@ public class ElectionManager {
         this.setState(ElectionState.FINISH);
         this.setMayor(mayor.get());
 
+        switch (mayorState){
+            case DOCTOR:
+                mayor.get();
+                break;
+            case FARMER:
+                mayor.get().addPotionModifier(PotionModifier.add(PotionEffectType.SATURATION,"mayor"));
+                break;
+            case RETAILER:
+                break;
+            case BLACK_SMITH:
+                break;
+            default:
+                break;
+        }
+
         Bukkit.broadcastMessage(api.translate("werewolf.election.result",
                 Formatter.format("&name&",mayor.get().getName()),
-                Formatter.format("&votes&",max.get())));
+                Formatter.format("&votes&",max.get()),
+                Formatter.format("&forme&",api.translate(this.getMayorState().getKey()))));
+
+        mayor.get().sendMessageWithKey(this.mayorState.getDescription());
+    }
+
+    public boolean isPower() {
+        return power;
+    }
+
+    public void unSetPower() {
+        this.power = false;
+    }
+
+    public MayorState getMayorState() {
+        return mayorState;
+    }
+
+    public void setMayorState(MayorState mayorState) {
+        this.mayorState = mayorState;
     }
 }

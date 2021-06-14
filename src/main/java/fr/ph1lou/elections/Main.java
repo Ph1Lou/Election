@@ -32,7 +32,9 @@ public class Main extends JavaPlugin {
 
         this.ww = getServer().getServicesManager().load(GetWereWolfAPI.class);
 
-        assert this.ww != null;
+        if(this.ww == null){
+            return;
+        }
 
         IRegisterManager registerManager = this.ww.getRegisterManager();
         String addons = "werewolf.addons_elections";
@@ -45,6 +47,12 @@ public class Main extends JavaPlugin {
         registerManager.registerCommands(new CommandRegister(addons,"werewolf.election.command", new ElectionCommand(this))
             .addStateWW(StateGame.GAME)
             .addStateAccess(StatePlayer.ALIVE));
+
+        registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer_application")
+                .setDefaultValue(120));
+
+        registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer_vote_mayor")
+                .setDefaultValue(90));
 
         registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer").setDefaultValue(1800).onZero(wereWolfAPI -> {
 
@@ -63,9 +71,9 @@ public class Main extends JavaPlugin {
                             this.getElectionManager().ifPresent(ElectionManager::getResult);
 
                         }
-                    },1200);
+                    },wereWolfAPI.getConfig().getTimerValue("werewolf.election.timer_vote_mayor"));
                 }
-            },2400);
+            },wereWolfAPI.getConfig().getTimerValue("werewolf.election.timer_application"));
         }).addPredicate(wereWolfAPI -> wereWolfAPI.getConfig().getTimerValue(TimerBase.ROLE_DURATION.getKey()) < 0
                 && !wereWolfAPI.getConfig().isTrollSV()));
 
