@@ -44,7 +44,7 @@ public class ElectionManager {
     }
 
     public void setMayor(@Nullable IPlayerWW mayor){
-        if(this.mayorState !=null){
+        if(this.mayor !=null){
             Bukkit.getPluginManager().callEvent(new UpdateNameTagEvent(this.mayor));
         }
         this.mayor =mayor;

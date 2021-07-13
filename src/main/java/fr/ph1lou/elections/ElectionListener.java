@@ -48,7 +48,7 @@ public class ElectionListener implements Listener {
         this.main.createGame(event.getWereWolfAPI());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onFinalDeath(FinalDeathEvent event){
         this.main.getElectionManager().ifPresent(electionManager -> electionManager.getMayor().ifPresent(playerWW -> {
             if(event.getPlayerWW().equals(playerWW)){
@@ -75,7 +75,11 @@ public class ElectionListener implements Listener {
             if (event.getWhoClicked().getUniqueId().equals(playerWW.getUUID())) {
                 WereWolfAPI game = main.getWereWolfAPI().getWereWolfAPI();
 
-                if(game.getRandom().nextFloat()*100<10){
+                if(!event.getRecipe().getResult().getType().equals(Material.GOLDEN_APPLE)){
+                    return;
+                }
+
+                if(game.getRandom().nextFloat()*100<20){
                     playerWW.addItem(new ItemStack(Material.GOLDEN_APPLE));
                     Bukkit.getPluginManager().callEvent(new MayorExtraGoldenAppleEvent(playerWW));
                 }

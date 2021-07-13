@@ -3,6 +3,7 @@ package fr.ph1lou.elections;
 import fr.ph1lou.elections.commands.ElectionCommand;
 import fr.ph1lou.elections.elections.ElectionManager;
 import fr.ph1lou.elections.elections.ElectionState;
+import io.github.ph1lou.werewolfapi.Formatter;
 import io.github.ph1lou.werewolfapi.GetWereWolfAPI;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
 import io.github.ph1lou.werewolfapi.enums.StateGame;
@@ -16,6 +17,7 @@ import io.github.ph1lou.werewolfapi.registers.IRegisterManager;
 import io.github.ph1lou.werewolfapi.registers.TimerRegister;
 import io.github.ph1lou.werewolfapi.utils.BukkitUtils;
 import io.github.ph1lou.werewolfapi.utils.ItemBuilder;
+import io.github.ph1lou.werewolfapi.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -49,33 +51,30 @@ public class Main extends JavaPlugin {
             .addStateAccess(StatePlayer.ALIVE));
 
         registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer_application")
-                .setDefaultValue(120));
+                .setDefaultValue(120)
+                .addPredicate(api -> api.getConfig().getTimerValue("werewolf.election.timer") < 0 && api.getConfig().isConfigActive("werewolf.election.name"))
+                .onZero(wereWolfAPI -> {
+                    this.getElectionManager().ifPresent(electionManager1 -> electionManager1.setState(ElectionState.ELECTION));
+                    Bukkit.broadcastMessage(wereWolfAPI.translate("werewolf.election.vote", Formatter.format("&timer&", Utils.conversion(wereWolfAPI.getConfig().getTimerValue("werewolf.election.timer_vote_mayor")))));
+                }));
 
         registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer_vote_mayor")
-                .setDefaultValue(90));
+                .setDefaultValue(90)
+                .addPredicate(api -> api.getConfig().getTimerValue("werewolf.election.timer_application") < 0 && api.getConfig().isConfigActive("werewolf.election.name"))
+                .onZero(api -> this.getElectionManager().ifPresent(ElectionManager::getResult)));
 
-        registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer").setDefaultValue(1800).onZero(wereWolfAPI -> {
+        registerManager.registerTimer(new TimerRegister(addons,"werewolf.election.timer").setDefaultValue(1800)
+                .onZero(wereWolfAPI -> {
 
             if(!wereWolfAPI.getConfig().isConfigActive("werewolf.election.name")){
                 return;
             }
 
-            Bukkit.broadcastMessage(wereWolfAPI.translate("werewolf.election.begin"));
+            Bukkit.broadcastMessage(wereWolfAPI.translate("werewolf.election.begin",Formatter.format("&timer&", Utils.conversion(wereWolfAPI.getConfig().getTimerValue("werewolf.election.timer_application")))));
             this.getElectionManager().ifPresent(electionManager1 -> electionManager1.setState(ElectionState.MESSAGE));
-            BukkitUtils.scheduleSyncDelayedTask(() -> {
-                if(wereWolfAPI.isState(StateGame.GAME)){
-                    this.getElectionManager().ifPresent(electionManager1 -> electionManager1.setState(ElectionState.ELECTION));
-                    Bukkit.broadcastMessage(wereWolfAPI.translate("werewolf.election.vote"));
-                    BukkitUtils.scheduleSyncDelayedTask(() -> {
-                        if(wereWolfAPI.isState(StateGame.GAME)){
-                            this.getElectionManager().ifPresent(ElectionManager::getResult);
 
-                        }
-                    },wereWolfAPI.getConfig().getTimerValue("werewolf.election.timer_vote_mayor"));
-                }
-            },wereWolfAPI.getConfig().getTimerValue("werewolf.election.timer_application"));
         }).addPredicate(wereWolfAPI -> wereWolfAPI.getConfig().getTimerValue(TimerBase.ROLE_DURATION.getKey()) < 0
-                && !wereWolfAPI.getConfig().isTrollSV()));
+                && !wereWolfAPI.getConfig().isTrollSV() && wereWolfAPI.getConfig().isConfigActive("werewolf.election.name")));
 
 
 
