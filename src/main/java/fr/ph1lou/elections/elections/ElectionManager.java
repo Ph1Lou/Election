@@ -1,5 +1,7 @@
 package fr.ph1lou.elections.elections;
 
+import fr.ph1lou.elections.events.MayorSelectionEvent;
+import fr.ph1lou.elections.events.MayorVoteEvent;
 import io.github.ph1lou.werewolfapi.Formatter;
 import io.github.ph1lou.werewolfapi.IPlayerWW;
 import io.github.ph1lou.werewolfapi.PotionModifier;
@@ -65,6 +67,8 @@ public class ElectionManager {
             return;
         }
         this.votes.put(playerWW,target);
+
+        Bukkit.getPluginManager().callEvent(new MayorVoteEvent(playerWW,target));
     }
 
     public Optional<String> getPlayerMessage(IPlayerWW playerWW) {
@@ -110,20 +114,10 @@ public class ElectionManager {
 
         this.setState(ElectionState.FINISH);
         this.setMayor(mayor.get());
+        Bukkit.getPluginManager().callEvent(new MayorSelectionEvent(mayor.get(),this.mayorState,max.get()));
 
-        switch (mayorState){
-            case DOCTOR:
-                mayor.get();
-                break;
-            case FARMER:
-                mayor.get().addPotionModifier(PotionModifier.add(PotionEffectType.SATURATION,"mayor"));
-                break;
-            case RETAILER:
-                break;
-            case BLACK_SMITH:
-                break;
-            default:
-                break;
+        if(this.mayorState == MayorState.FARMER){
+            mayor.get().addPotionModifier(PotionModifier.add(PotionEffectType.SATURATION,"mayor"));
         }
 
         Bukkit.broadcastMessage(api.translate("werewolf.election.result",

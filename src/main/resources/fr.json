@@ -9,19 +9,20 @@
         "doctor": {
           "name": "Docteur",
           "description": "[§aLG UHC§r] Vous avez une seconde vie",
-          "resurrection": "[§aLG UHC§r] Vous ressuscitez avec votre pouvoir de maire §bMedecin"
+          "resurrection": "[§aLG UHC§r] Vous ressuscitez avec votre pouvoir de Maire §bMedecin"
         },
         "farmer": {
           "name":"Fermier",
-          "description": "[§aLG UHC§r] Vous n'avez plus besoin de vous nourrir pendant la partie"
+          "description": "[§aLG UHC§r] Vous n'avez plus besoin de vous nourrir pendant la partie, vous avez 20% de chance lorsque vous craftez une pomme d'or d'en avoir une en plus"
         },
-        "retailer": {
-          "name":"Commerçant",
-          "description": ""
+        "undertaker": {
+          "name":"Croque Mort",
+          "description": "[§aLG UHC§r] Dès que une personne de votre camp meurt, vous gagnez une pomme d'or",
+          "message": "[§cLG UHC§r] Une personne de votre camp vient de mourir, vous gagnez une pomme d'or"
         },
         "black_smith": {
           "name":"Forgeron",
-          "description": ""
+          "description": "[§aLG UHC§r] Vous prenez 10% de dégâts en moins"
         }
       },
       "death": "[§cLG UHC§r] Le maire est mort",
@@ -35,7 +36,7 @@
       "timer": "Début des élections (§b%s§f)",
       "timer_application": "Durée des candidatures (§b%s§f)",
       "timer_vote_mayor": "Durée du vote pour le Maire (§b%s§f)",
-      "application": "Candidature : §b%s",
+      "application": "Candidature : §b&application&",
       "begin": "[§eLG UHC§r] C'est le début des elections du maire (double vote), pour vous présenter §b/ww election§f <message pour convaincre les électeurs>, vous avez §b2 minutes",
       "vote": "[§eLG UHC§r] C'est le moment du vote. Votez pour votre maire avec §b/ww election§f, vous avez §b1 minute",
       "result": "[§eLG UHC§r] Le maire &forme& §b&name&§f a été élu avec §b&votes&§f votes. Il a un double vote en plus du pouvoir de sa forme"

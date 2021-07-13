@@ -5,8 +5,8 @@ public enum MayorState {
             "werewolf.election.regime.doctor.description"),
     FARMER("werewolf.election.regime.name.farmer.name",
             "werewolf.election.regime.name.farmer.description"),
-    RETAILER("werewolf.election.regime.retailer.name",
-            "werewolf.election.regime.retailer.description"),
+    UNDERTAKER("werewolf.election.regime.undertaker.name",
+            "werewolf.election.regime.undertaker.description"),
     BLACK_SMITH("werewolf.election.regime.black_smith.name",
             "werewolf.election.regime.black_smith.description");
 

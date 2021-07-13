@@ -5,6 +5,7 @@ import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.ph1lou.elections.Main;
+import io.github.ph1lou.werewolfapi.Formatter;
 import io.github.ph1lou.werewolfapi.IPlayerWW;
 import io.github.ph1lou.werewolfapi.WereWolfAPI;
 import io.github.ph1lou.werewolfapi.enums.UniversalMaterial;
@@ -93,7 +94,7 @@ public class ElectionGUI implements InventoryProvider {
                     .collect(Collectors.toList());
 
             lore.add(0,game.translate("werewolf.election.application",
-                    electionManager.getPlayerMessage(candidateWW).orElse("")));
+                    Formatter.format("&application&",electionManager.getPlayerMessage(candidateWW).orElse(""))));
 
 
             contents.get(i.get()/9,i.get()%9).ifPresent(clickableItem -> {

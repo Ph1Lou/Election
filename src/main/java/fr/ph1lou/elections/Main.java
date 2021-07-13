@@ -82,6 +82,9 @@ public class Main extends JavaPlugin {
         registerManager.registerConfig(new ConfigRegister(addons,"werewolf.election.name"));
 
         BukkitUtils.registerEvents(new ElectionListener(this));
+
+        BukkitUtils.registerEvents(new EventListener());
+
     }
 
 
