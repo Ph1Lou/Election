@@ -13,7 +13,7 @@ Une fois élu le maire peut avoir 4 formes :
 
 Forme Docteur : Peut ressusciter une fois
 Forme Croque Mort : Dès que quelqu'un de son camp meurt, il gagne une pomme d'or
-Forme Fermier : Il n'a pas besoin de se nourrir, plus il a 10% de chance d'avoir une pomme d'or en plus quand il en craft une.
+Forme Fermier : Il n'a pas besoin de se nourrir, plus il a 20% de chance d'avoir une pomme d'or en plus quand il en craft une.
 Forme Forgeron : Il prend 10% de dégâts en moins.
 
 Le maire a également un double vote
