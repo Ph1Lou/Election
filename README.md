@@ -9,7 +9,7 @@ Rajoute un système d’élection de maire.
 Déclenchement du vote dans les timers de la config.
 Activation dans les configs.
 
-Une fois élu le maire peut avoir 4 formes :
+Une fois élu le maire peut avoir une des 4 formes (aléatoire) :
 
 Forme Docteur : Peut ressusciter une fois
 Forme Croque Mort : Dès que quelqu'un de son camp meurt, il gagne une pomme d'or
