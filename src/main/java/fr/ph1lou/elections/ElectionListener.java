@@ -57,7 +57,8 @@ public class ElectionListener implements Listener {
                         .getWereWolfAPI().translate("werewolf.election.death"));
                 Bukkit.getPluginManager().callEvent(new MayorDeathEvent(event.getPlayerWW()));
             }
-            else if(playerWW.isState(StatePlayer.ALIVE)){
+            else if(playerWW.isState(StatePlayer.ALIVE) && electionManager.getMayorState() == MayorState.UNDERTAKER){
+
                 if(event.getPlayerWW().getRole().getCamp().equals(playerWW.getRole().getCamp())){
                     playerWW.addItem(new ItemStack(Material.GOLDEN_APPLE));
                     playerWW.sendMessageWithKey("werewolf.election.regime.undertaker.message");
@@ -71,7 +72,12 @@ public class ElectionListener implements Listener {
 
     @EventHandler
     public void onGoldenAppleCraft(CraftItemEvent event){
-        this.main.getElectionManager().flatMap(ElectionManager::getMayor).ifPresent(playerWW -> {
+        this.main.getElectionManager().ifPresent(electionManager ->  electionManager.getMayor().ifPresent(playerWW -> {
+
+            if(electionManager.getMayorState() != MayorState.FARMER){
+                return;
+            }
+
             if (event.getWhoClicked().getUniqueId().equals(playerWW.getUUID())) {
                 WereWolfAPI game = main.getWereWolfAPI().getWereWolfAPI();
 
@@ -84,7 +90,7 @@ public class ElectionListener implements Listener {
                     Bukkit.getPluginManager().callEvent(new MayorExtraGoldenAppleEvent(playerWW));
                 }
             }
-        });
+        }));
     }
 
     @EventHandler
