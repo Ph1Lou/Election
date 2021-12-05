@@ -13,7 +13,7 @@
         },
         "farmer": {
           "name":"Fermier",
-          "description": "[§aLG UHC§r] Vous n'avez plus besoin de vous nourrir pendant la partie, vous avez 20%% de chance lorsque vous craftez une pomme d'or d'en avoir une en plus"
+          "description": "[§aLG UHC§r] Vous n'avez plus besoin de vous nourrir pendant la partie, vous avez 20% de chance lorsque vous craftez une pomme d'or d'en avoir une en plus"
         },
         "undertaker": {
           "name":"Croque Mort",
@@ -22,7 +22,7 @@
         },
         "black_smith": {
           "name":"Forgeron",
-          "description": "[§aLG UHC§r] Vous prenez 10%% de dégâts en moins"
+          "description": "[§aLG UHC§r] Vous prenez 10% de dégâts en moins"
         }
       },
       "death": "[§cLG UHC§r] Le maire est mort",
@@ -33,9 +33,9 @@
       "change": "[§6LG UHC§r] Votre participation a été changée",
       "finish": "[§eLG UHC§r] Les élections sont finies",
       "menu_title": "Menu des §bVotes",
-      "timer": "Début des élections (§b%s§f)",
-      "timer_application": "Durée des candidatures (§b%s§f)",
-      "timer_vote_mayor": "Durée du vote pour le Maire (§b%s§f)",
+      "timer": "Début des élections (§b&timer&§f)",
+      "timer_application": "Durée des candidatures (§b&timer&§f)",
+      "timer_vote_mayor": "Durée du vote pour le Maire (§b&timer&§f)",
       "application": "Candidature : §b&application&",
       "begin": "[§eLG UHC§r] C'est le début des elections du maire, pour vous présenter §b/ww election§f <message pour convaincre les électeurs>, vous avez §b&timer&",
       "vote": "[§eLG UHC§r] C'est le moment du vote. Votez pour votre maire avec §b/ww election§f, vous avez §b&timer&",
