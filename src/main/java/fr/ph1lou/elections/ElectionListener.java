@@ -6,14 +6,14 @@ import fr.ph1lou.elections.events.MayorDeathEvent;
 import fr.ph1lou.elections.events.MayorExtraGoldenAppleEvent;
 import fr.ph1lou.elections.events.MayorGoldenAppleEvent;
 import fr.ph1lou.elections.events.MayorResurrectionEvent;
-import io.github.ph1lou.werewolfapi.IPlayerWW;
-import io.github.ph1lou.werewolfapi.WereWolfAPI;
-import io.github.ph1lou.werewolfapi.enums.StatePlayer;
-import io.github.ph1lou.werewolfapi.events.UpdatePlayerNameTagEvent;
-import io.github.ph1lou.werewolfapi.events.game.game_cycle.StartEvent;
-import io.github.ph1lou.werewolfapi.events.game.life_cycle.FinalDeathEvent;
-import io.github.ph1lou.werewolfapi.events.game.life_cycle.ThirdDeathEvent;
-import io.github.ph1lou.werewolfapi.events.game.vote.VoteEvent;
+import fr.ph1lou.werewolfapi.enums.StatePlayer;
+import fr.ph1lou.werewolfapi.events.UpdatePlayerNameTagEvent;
+import fr.ph1lou.werewolfapi.events.game.game_cycle.StartEvent;
+import fr.ph1lou.werewolfapi.events.game.life_cycle.FinalDeathEvent;
+import fr.ph1lou.werewolfapi.events.game.life_cycle.ThirdDeathEvent;
+import fr.ph1lou.werewolfapi.events.game.vote.VoteEvent;
+import fr.ph1lou.werewolfapi.game.WereWolfAPI;
+import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,6 +25,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
+
 
 public class ElectionListener implements Listener {
 
@@ -38,7 +39,7 @@ public class ElectionListener implements Listener {
     public void onNameTagUpdate(UpdatePlayerNameTagEvent event){
         this.main.getElectionManager().flatMap(ElectionManager::getMayor).ifPresent(playerWW -> {
             if (playerWW.getUUID().equals(event.getPlayerUUID())) {
-                event.setPrefix(event.getPrefix() + this.main.getWereWolfAPI().getWereWolfAPI().translate("werewolf.election.star"));
+                event.setPrefix(event.getPrefix() + this.main.getWereWolfAPI().getWereWolfAPI().translate("elections.election.star"));
             }
         });
     }
@@ -54,14 +55,14 @@ public class ElectionListener implements Listener {
             if(event.getPlayerWW().equals(playerWW)){
                 electionManager.setMayor(null);
                 Bukkit.broadcastMessage(this.main.getWereWolfAPI()
-                        .getWereWolfAPI().translate("werewolf.election.death"));
+                        .getWereWolfAPI().translate("elections.election.death"));
                 Bukkit.getPluginManager().callEvent(new MayorDeathEvent(event.getPlayerWW()));
             }
             else if(playerWW.isState(StatePlayer.ALIVE) && electionManager.getMayorState() == MayorState.UNDERTAKER){
 
                 if(event.getPlayerWW().getRole().getCamp().equals(playerWW.getRole().getCamp())){
                     playerWW.addItem(new ItemStack(Material.GOLDEN_APPLE));
-                    playerWW.sendMessageWithKey("werewolf.election.regime.undertaker.message");
+                    playerWW.sendMessageWithKey("elections.election.regime.undertaker.message");
                     Bukkit.getPluginManager().callEvent(new MayorGoldenAppleEvent(playerWW,event.getPlayerWW()));
 
                 }
@@ -116,7 +117,7 @@ public class ElectionListener implements Listener {
 
             event.setCancelled(true);
 
-            playerWW.sendMessageWithKey("werewolf.election.regime.doctor.resurrection");
+            playerWW.sendMessageWithKey("elections.election.regime.doctor.resurrection");
 
             Bukkit.getPluginManager().callEvent(new MayorResurrectionEvent(event.getPlayerWW()));
 
@@ -153,7 +154,7 @@ public class ElectionListener implements Listener {
     public void onVote(VoteEvent event){
         this.main.getElectionManager().flatMap(ElectionManager::getMayor).ifPresent(playerWW -> {
             if (playerWW.equals(event.getPlayerWW())) {
-                Map<IPlayerWW,Integer> votes = this.main.getWereWolfAPI().getWereWolfAPI().getVote().getVotes();
+                Map<IPlayerWW,Integer> votes = this.main.getWereWolfAPI().getWereWolfAPI().getVoteManager().getVotes();
                 votes.put(event.getTargetWW(),votes.getOrDefault(event.getTargetWW(),0)+1);
             }
         });

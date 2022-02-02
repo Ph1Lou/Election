@@ -2,12 +2,12 @@ package fr.ph1lou.elections.elections;
 
 import fr.ph1lou.elections.events.MayorSelectionEvent;
 import fr.ph1lou.elections.events.MayorVoteEvent;
-import io.github.ph1lou.werewolfapi.Formatter;
-import io.github.ph1lou.werewolfapi.IPlayerWW;
-import io.github.ph1lou.werewolfapi.PotionModifier;
-import io.github.ph1lou.werewolfapi.WereWolfAPI;
-import io.github.ph1lou.werewolfapi.enums.StatePlayer;
-import io.github.ph1lou.werewolfapi.events.UpdateNameTagEvent;
+import fr.ph1lou.werewolfapi.enums.StatePlayer;
+import fr.ph1lou.werewolfapi.events.UpdateNameTagEvent;
+import fr.ph1lou.werewolfapi.game.WereWolfAPI;
+import fr.ph1lou.werewolfapi.player.impl.PotionModifier;
+import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
+import fr.ph1lou.werewolfapi.player.utils.Formatter;
 import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.Nullable;
@@ -120,7 +120,7 @@ public class ElectionManager {
             mayor.get().addPotionModifier(PotionModifier.add(PotionEffectType.SATURATION,"mayor"));
         }
 
-        Bukkit.broadcastMessage(api.translate("werewolf.election.result",
+        Bukkit.broadcastMessage(api.translate("elections.election.result",
                 Formatter.format("&name&",mayor.get().getName()),
                 Formatter.format("&votes&",max.get()),
                 Formatter.format("&forme&",api.translate(this.getMayorState().getKey()))));

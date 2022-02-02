@@ -31,9 +31,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.Ph1Lou</groupId>
+            <groupId>fr.Ph1Lou</groupId>
             <artifactId>WereWolfAPI</artifactId>
-            <version>1.5</version>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 

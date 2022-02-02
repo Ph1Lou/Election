@@ -1,6 +1,6 @@
 {
-  "werewolf": {
-    "addons_elections": "§fAddon des Elections",
+  "elections": {
+    "name": "§fLes Elections",
     "election": {
       "command": "election",
       "star": "§6⭐ ",

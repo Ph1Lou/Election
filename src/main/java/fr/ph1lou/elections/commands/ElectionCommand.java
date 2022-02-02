@@ -3,9 +3,9 @@ package fr.ph1lou.elections.commands;
 import fr.ph1lou.elections.Main;
 import fr.ph1lou.elections.elections.ElectionGUI;
 import fr.ph1lou.elections.elections.ElectionState;
-import io.github.ph1lou.werewolfapi.ICommand;
-import io.github.ph1lou.werewolfapi.IPlayerWW;
-import io.github.ph1lou.werewolfapi.WereWolfAPI;
+import fr.ph1lou.werewolfapi.commands.ICommand;
+import fr.ph1lou.werewolfapi.game.WereWolfAPI;
+import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
 import org.bukkit.entity.Player;
 
 public class ElectionCommand implements ICommand {
@@ -26,20 +26,20 @@ public class ElectionCommand implements ICommand {
 
                     if (playerWW==null) return;
 
-                    if (!wereWolfAPI.getConfig().isConfigActive("werewolf.election.name")) {
-                        playerWW.sendMessageWithKey("werewolf.election.disable");
+                    if (!wereWolfAPI.getConfig().isConfigActive("elections.election.name")) {
+                        playerWW.sendMessageWithKey("elections.election.disable");
                         return;
                     }
 
                     if (electionManager.isState(ElectionState.NOT_BEGIN) ) {
-                        playerWW.sendMessageWithKey("werewolf.election.not_begin");
+                        playerWW.sendMessageWithKey("elections.election.not_begin");
                         return;
                     }
 
                     if (electionManager.isState(ElectionState.MESSAGE)) {
 
                         if(args.length==0){
-                            playerWW.sendMessageWithKey("werewolf.election.empty");
+                            playerWW.sendMessageWithKey("elections.election.empty");
                             return;
                         }
                         StringBuilder message = new StringBuilder();
@@ -47,10 +47,10 @@ public class ElectionCommand implements ICommand {
                             message.append(part).append(" ");
                         }
                         if(electionManager.getPlayerMessage(playerWW).isPresent()){
-                            playerWW.sendMessageWithKey("werewolf.election.change");
+                            playerWW.sendMessageWithKey("elections.election.change");
                         }
                         else{
-                            playerWW.sendMessageWithKey("werewolf.election.register");
+                            playerWW.sendMessageWithKey("elections.election.register");
                         }
 
                         electionManager.addMessage(playerWW,message.toString());
@@ -63,7 +63,7 @@ public class ElectionCommand implements ICommand {
                     }
 
                     if (electionManager.isState(ElectionState.FINISH)) {
-                        playerWW.sendMessageWithKey("werewolf.election.finish");
+                        playerWW.sendMessageWithKey("elections.election.finish");
                     }
                 });
 

@@ -1,7 +1,7 @@
 package fr.ph1lou.elections.events;
 
-import io.github.ph1lou.werewolfapi.IPlayerWW;
-import io.github.ph1lou.werewolfapi.events.roles.SelectionEvent;
+import fr.ph1lou.werewolfapi.events.roles.SelectionEvent;
+import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 

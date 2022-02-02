@@ -5,11 +5,11 @@ import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
 import fr.ph1lou.elections.Main;
-import io.github.ph1lou.werewolfapi.Formatter;
-import io.github.ph1lou.werewolfapi.IPlayerWW;
-import io.github.ph1lou.werewolfapi.WereWolfAPI;
-import io.github.ph1lou.werewolfapi.enums.UniversalMaterial;
-import io.github.ph1lou.werewolfapi.utils.ItemBuilder;
+import fr.ph1lou.werewolfapi.enums.UniversalMaterial;
+import fr.ph1lou.werewolfapi.game.WereWolfAPI;
+import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
+import fr.ph1lou.werewolfapi.player.utils.Formatter;
+import fr.ph1lou.werewolfapi.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,7 +30,7 @@ public class ElectionGUI implements InventoryProvider {
                 .manager(JavaPlugin.getPlugin(Main.class).getWereWolfAPI().getInvManager())
                 .provider(new ElectionGUI(player))
                 .size(6, 9)
-                .title(JavaPlugin.getPlugin(Main.class).getWereWolfAPI().getWereWolfAPI().translate("werewolf.election.menu_title"))
+                .title(JavaPlugin.getPlugin(Main.class).getWereWolfAPI().getWereWolfAPI().translate("elections.election.menu_title"))
                 .closeable(true)
                 .build();
     }
@@ -58,7 +58,7 @@ public class ElectionGUI implements InventoryProvider {
             contents.set(i.get()/9,i.get()%9,
                     ClickableItem.of(new ItemBuilder(UniversalMaterial.PLAYER_HEAD.getStack())
                             .setHead(candidateWW.getName(),
-                                    Bukkit.getOfflinePlayer(candidateWW.getMojangUUID()))
+                                    Bukkit.getOfflinePlayer(candidateWW.getReviewUUID()))
                             .setLore(electionManager.getPlayerMessage(candidateWW).orElse(""))
                             .build(),event -> {
                         if(electionManager.isState(ElectionState.ELECTION)){
@@ -93,7 +93,7 @@ public class ElectionGUI implements InventoryProvider {
                     .map(IPlayerWW::getName)
                     .collect(Collectors.toList());
 
-            lore.add(0,game.translate("werewolf.election.application",
+            lore.add(0,game.translate("elections.election.application",
                     Formatter.format("&application&",electionManager.getPlayerMessage(candidateWW).orElse(""))));
 
 
