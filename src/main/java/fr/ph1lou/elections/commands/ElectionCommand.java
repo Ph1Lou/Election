@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @PlayerCommand(key = "elections.election.command", descriptionKey = "",
-        statesGame = StateGame.LOBBY,
+        statesGame = StateGame.GAME,
         statesPlayer = StatePlayer.ALIVE)
 public class ElectionCommand implements ICommand {
 
