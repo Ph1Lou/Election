@@ -27,13 +27,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fr.Ph1Lou</groupId>
             <artifactId>WereWolfAPI</artifactId>
-            <version>1.9</version>
+            <version>1.10</version>
         </dependency>
     </dependencies>
 

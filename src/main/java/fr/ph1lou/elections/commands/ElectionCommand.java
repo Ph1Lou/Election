@@ -3,17 +3,25 @@ package fr.ph1lou.elections.commands;
 import fr.ph1lou.elections.Main;
 import fr.ph1lou.elections.elections.ElectionGUI;
 import fr.ph1lou.elections.elections.ElectionState;
+import fr.ph1lou.werewolfapi.annotations.PlayerCommand;
 import fr.ph1lou.werewolfapi.commands.ICommand;
+import fr.ph1lou.werewolfapi.enums.StateGame;
+import fr.ph1lou.werewolfapi.enums.StatePlayer;
 import fr.ph1lou.werewolfapi.game.WereWolfAPI;
 import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
+@PlayerCommand(key = "elections.election.command", descriptionKey = "",
+        statesGame = StateGame.LOBBY,
+        statesPlayer = StatePlayer.ALIVE)
 public class ElectionCommand implements ICommand {
+
 
     private final Main main;
 
-    public ElectionCommand(Main main){
-        this.main = main;
+    public ElectionCommand(){
+        this.main = JavaPlugin.getPlugin(Main.class);
     }
 
     @Override

@@ -25,12 +25,12 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onMayorDeath(MayorVoteEvent event){
+    public void onMayorVote(MayorVoteEvent event){
         Bukkit.getPluginManager().callEvent(new CustomEvent(event.getPlayerWW(), Sets.newHashSet(event.getTargetWW()) ,"elections.mayor_vote"));
     }
 
     @EventHandler
-    public void onMayorDeath(MayorGoldenAppleEvent event){
+    public void onMayorEatGoldeApple(MayorGoldenAppleEvent event){
         Bukkit.getPluginManager().callEvent(new CustomEvent(event.getPlayerWW(), Sets.newHashSet(event.getTargetWW()) ,"elections.mayor_golden_apple"));
     }
 
