@@ -1,8 +1,12 @@
 package fr.ph1lou.elections;
 
 import fr.ph1lou.elections.elections.ElectionManager;
+import fr.ph1lou.elections.elections.ElectionState;
 import fr.ph1lou.elections.elections.MayorState;
 import fr.ph1lou.elections.events.MayorDeathEvent;
+import fr.ph1lou.elections.events.MayorElectionApplicationBeginEvent;
+import fr.ph1lou.elections.events.MayorElectionVoteBeginEvent;
+import fr.ph1lou.elections.events.MayorElectionVoteEndEvent;
 import fr.ph1lou.elections.events.MayorExtraGoldenAppleEvent;
 import fr.ph1lou.elections.events.MayorGoldenAppleEvent;
 import fr.ph1lou.elections.events.MayorResurrectionEvent;
@@ -14,6 +18,8 @@ import fr.ph1lou.werewolfapi.events.game.life_cycle.ThirdDeathEvent;
 import fr.ph1lou.werewolfapi.events.game.vote.VoteEvent;
 import fr.ph1lou.werewolfapi.game.WereWolfAPI;
 import fr.ph1lou.werewolfapi.player.interfaces.IPlayerWW;
+import fr.ph1lou.werewolfapi.player.utils.Formatter;
+import fr.ph1lou.werewolfapi.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -92,6 +98,50 @@ public class ElectionListener implements Listener {
                 }
             }
         }));
+    }
+
+    @EventHandler
+    public void onMayorVoteEnd(MayorElectionVoteEndEvent event){
+
+        WereWolfAPI game = main.getWereWolfAPI().getWereWolfAPI();
+
+        if(!game.getConfig().isConfigActive("elections.election.name")){
+            return;
+        }
+
+        main.getElectionManager()
+                .ifPresent(ElectionManager::getResult);
+    }
+
+    @EventHandler
+    public void onElectionBegin(MayorElectionApplicationBeginEvent event){
+
+        WereWolfAPI game = main.getWereWolfAPI().getWereWolfAPI();
+
+        if(!game.getConfig().isConfigActive("elections.election.name")){
+            return;
+        }
+
+        Bukkit.broadcastMessage(game.translate("elections.election.begin", Formatter.format("&timer&",
+                Utils.conversion(game.getConfig().getTimerValue("elections.election.timer_application")))));
+        main.getElectionManager()
+                .ifPresent(electionManager1 -> electionManager1.setState(ElectionState.MESSAGE));
+    }
+
+    @EventHandler
+    public void onMayorVoteBegin(MayorElectionVoteBeginEvent event){
+
+        WereWolfAPI game = main.getWereWolfAPI().getWereWolfAPI();
+
+        if(!game.getConfig().isConfigActive("elections.election.name")){
+            return;
+        }
+
+        main.getElectionManager()
+                .ifPresent(electionManager1 -> electionManager1.setState(ElectionState.ELECTION));
+        Bukkit.broadcastMessage(game.translate("elections.election.vote",
+                Formatter.format("&timer&",
+                        Utils.conversion(game.getConfig().getTimerValue("elections.election.timer_vote_mayor")))));
     }
 
     @EventHandler
