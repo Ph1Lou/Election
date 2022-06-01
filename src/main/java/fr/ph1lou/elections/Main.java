@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Optional;
 
 @ModuleWerewolf(key = Main.KEY, loreKeys = {}, item = UniversalMaterial.SIGN,
-        defaultLanguage = "fr",
+        defaultLanguage = "fr_FR",
         authors = @Author(uuid = "056be797-2a0b-4807-9af5-37faf5384396", name = "Ph1Lou"))
 public class Main extends JavaPlugin {
 
